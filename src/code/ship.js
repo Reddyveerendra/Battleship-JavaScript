@@ -17,7 +17,7 @@ function shipFactory(length) {
 }
 export let Carrier = shipFactory(5);
 export let Battleship = shipFactory(4);
-export let Cruiser = shipFactory(3, 0);
-export let Submarine = shipFactory(3, 0);
-export let Destroyer = shipFactory(2, 0);
+export let Cruiser = shipFactory(3);
+export let Submarine = shipFactory(3);
+export let Destroyer = shipFactory(2);
 module.exports = shipFactory;
