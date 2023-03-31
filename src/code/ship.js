@@ -1,5 +1,7 @@
-function shipFactory(length) {
+function shipFactory(name, length) {
+
     const ship = {
+
         hits: 0,
         hit() {
             this.hits = this.hits + 1;
@@ -12,12 +14,8 @@ function shipFactory(length) {
             return false;
         }
     }
+    ship.name = name;
     ship.length = length;
     return ship;
 }
-export let Carrier = shipFactory(5);
-export let Battleship = shipFactory(4);
-export let Cruiser = shipFactory(3);
-export let Submarine = shipFactory(3);
-export let Destroyer = shipFactory(2);
 module.exports = shipFactory;
