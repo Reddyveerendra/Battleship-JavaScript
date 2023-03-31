@@ -24,39 +24,39 @@
   background-color: brown;
 }
 .destroyer-preview {
-  width: 40px;
-  height: 20px;
+  width: 30px;
+  height: 15px;
   margin: 3px;
 }
 .submarine {
   background-color: green;
 }
 .submarine-preview {
-  width: 60px;
-  height: 20px;
+  width: 45px;
+  height: 15px;
   margin: 3px;
 }
 .cruiser {
   background-color: purple;
 }
 .cruiser-preview {
-  width: 60px;
-  height: 20px;
+  width: 45px;
+  height: 15px;
   margin: 3px;
 }
 .battleship {
   background-color: orange;
 }
 .battleship-preview {
-  width: 80px;
-  height: 20px;
+  width: 60px;
+  height: 15px;
   margin: 3px;
 }
 .carrier {
   background-color: blue;
 }
 .carrier-preview {
-  width: 100px;
-  height: 20px;
+  width: 75px;
+  height: 15px;
   margin: 3px;
 }
