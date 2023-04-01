@@ -5,16 +5,15 @@ function createGameBoard(user, color) {
     for (let i = 0; i < 100; i++) {
         const cell = document.createElement("div");
         temp.appendChild(cell);
-        cell.style.border = "1px solid black";
         cell.classList.add('cell', "notTaken");
         cell.id = `${i}`
     }
     temp.id = `${user}`
-    temp.style = `display: grid;background: ${color};grid-template-columns: repeat(10,1fr);width: 150px;`;
+    temp.style = `display: grid;background: ${color};grid-template-columns: repeat(10,1fr);width: 150px;border-radius: 3px;`;
     return temp;
 }
-const player_board = createGameBoard("player", "yellow");
-const computer_board = createGameBoard("computer", "pink");
+const player_board = createGameBoard("player", "#00BFFF");
+const computer_board = createGameBoard("computer", "#00BFFF");
 GameBoard.appendChild(player_board);
 GameBoard.appendChild(computer_board);
 module.exports = GameBoard;

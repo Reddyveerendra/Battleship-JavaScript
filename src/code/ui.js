@@ -1,5 +1,6 @@
 const GameBoard = require("./GameBoard")
 const shipFactory = require("./ship")
+const Player = require("./Player")
 const ui = () => {
     const content = document.querySelector("#content");
     const header = document.createElement("div")
@@ -52,12 +53,14 @@ const ui = () => {
     /** OPTION CONTAINER */
     const option_container = document.createElement("div");
     const buttons = document.createElement("div");
-    option_container.style = "background: yellow;height: 100px;margin: 3%;align-items: center;display: flex;justify-content: center;";
+    option_container.style = "background: yellow;height: 100px;margin: 1%;align-items: center;display: flex;justify-content: center;";
     const flip = document.createElement("input");
     flip.value = "FLIP";
     flip.type = "button"
     const start = document.createElement("input");
+    start.type = "button"
     start.value = "START";
+    start.id = "start";
     start.style = "margin:2%;";
     flip.style = 'margin:2%;';
     var flipper = false;
@@ -72,6 +75,15 @@ const ui = () => {
             flipper = !flipper
         }
     }
+    start.onclick = function startGame() {
+        const optionsCheck = document.querySelectorAll(".option_container div");
+        if (optionsCheck.length) {
+            alert("Please place all ship in Game Board")
+        }
+        else {
+            Player();
+        }
+    }
     const end = document.createElement("div");
     main.appendChild(option_container);
     main.appendChild(flip);
@@ -83,17 +95,18 @@ const ui = () => {
     const Cruiser = shipFactory('Cruiser', 3);
     const Submarine = shipFactory("Submarine", 3);
     const Destroyer = shipFactory("Destroyer", 2);
-    function shipMaker(name) {
+    function shipMaker(name, Id) {
         const div = document.createElement("div");
         div.classList.add(name, `${name}-preview`);
         option_container.appendChild(div);
         div.draggable = true;
+        div.id = Id;
     }
-    shipMaker('carrier');
-    shipMaker('battleship');
-    shipMaker('cruiser');
-    shipMaker('submarine');
-    shipMaker('destroyer');
+    shipMaker('carrier', "0");
+    shipMaker('battleship', "1");
+    shipMaker('cruiser', "2");
+    shipMaker('submarine', "3");
+    shipMaker('destroyer', "4");
     /* ships computer */
     let carrier = new shipFactory('carrier', 5);
     let battleship = new shipFactory('battleship', 4);
@@ -113,5 +126,107 @@ const ui = () => {
         }
         return j += 1;
     })
+    /* Player */
+    const optionContainer = document.querySelector(".option_container")
+    const option_ships = document.querySelectorAll(".option_container div");
+    option_ships.forEach((ship) => {
+        ship.addEventListener("drag", dragStart)
+    });
+    let draggedShip;
+    option_ships.forEach(option_ship => option_ship.addEventListener("dragstart", dragStart))
+    const player_spaces = document.querySelectorAll("#player div")
+    player_spaces.forEach((player_space) => {
+        player_space.addEventListener('dragover', dragOver);
+        player_space.addEventListener('drop', dropShip);
+    })
+    function dragStart(e) {
+        draggedShip = e.target;
+        notDropped = false;
+    }
+    function dragOver(e) {
+        e.preventDefault()
+    }
+    function dropShip(e) {
+        const startId = e.target.id;
+        const ship = computer_ships[draggedShip.id];
+        userAddShip(ship, startId);
+        if (!notDropped) {
+            draggedShip.remove()
+        }
+    }
+    function userAddShip(ship, startId) {
+        if (!flipper) {
+            if (startId % 10 < 5) {
+                for (let k = startId; k < parseInt(startId) + ship.length; k++) {
+                    const checker = [...player_spaces[k].classList];
+                    if (checker.includes("taken")) {
+                        notDropped = true;
+                        alert(`your ships are overlapping at ${parseInt(k / 10) + 1}th row and ${parseInt(k % 10) + 1}th column`)
+                        return;
+                    }
+                }
+                for (let i = startId; i < parseInt(startId) + ship.length; i++) {
+                    player_spaces[i].classList.add(ship.name)
+                    player_spaces[i].classList.add('taken')
+                    player_spaces[i].classList.remove("notTaken")
+                }
+            }
+            else {
+                for (let k = parseInt(startId) - ship.length + 1; k < parseInt(startId) + 1; k++) {
+                    const checker = [...player_spaces[k].classList];
+                    if (checker.includes("taken")) {
+                        notDropped = true;
+                        alert(`your ships are overlapping at ${parseInt(k / 10) + 1}th row and ${parseInt(k % 10) + 1}th column`)
+                        return;
+                    }
+                }
+                for (let i = parseInt(startId) - ship.length + 1; i < parseInt(startId) + 1; i++) {
+                    player_spaces[i].classList.add(ship.name)
+                    player_spaces[i].classList.add('taken')
+                    player_spaces[i].classList.remove("notTaken")
+                }
+            }
+        }
+        else {
+            if (startId / 10 < 5) {
+                let i = parseInt(startId)
+                let k = parseInt(startId)
+                while (k < parseInt(startId) + (ship.length * 10)) {
+                    const checker = [...player_spaces[k].classList];
+                    if (checker.includes("taken")) {
+                        alert(`your ships are overlapping at ${parseInt(k / 10) + 1}th row and ${parseInt(k % 10) + 1}th column`)
+                        notDropped = true;
+                        return;
+                    }
+                    k = k + 10;
+                }
+                while (i < parseInt(startId) + (ship.length * 10)) {
+                    player_spaces[i].classList.add(ship.name)
+                    player_spaces[i].classList.add('taken')
+                    player_spaces[i].classList.remove("notTaken")
+                    i = i + 10;
+                }
+            }
+            else {
+                let i = parseInt(startId) - ship.length * 10 + 10
+                let k = parseInt(startId) - ship.length * 10 + 10
+                while (k < parseInt(startId) + 10) {
+                    const checker = [...player_spaces[k].classList];
+                    if (checker.includes("taken")) {
+                        alert(`your ships are overlapping at ${parseInt(k / 10) + 1}th row and ${parseInt(k % 10) + 1}th column`)
+                        notDropped = true;
+                        return;
+                    }
+                    k = k + 10;
+                }
+                while (i < parseInt(startId) + 10) {
+                    player_spaces[i].classList.add(ship.name)
+                    player_spaces[i].classList.add('taken')
+                    player_spaces[i].classList.remove("notTaken")
+                    i = i + 10;
+                }
+            }
+        }
+    }
 }
-module.exports = ui; 
+module.exports = ui;
