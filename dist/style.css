@@ -20,43 +20,50 @@
   display: flex;
   align-items: center;
 }
-.destroyer {
+.Destroyer {
   background-color: brown;
 }
-.destroyer-preview {
+.Destroyer-preview {
   width: 30px;
   height: 15px;
   margin: 3px;
 }
-.submarine {
+.Submarine {
   background-color: green;
 }
-.submarine-preview {
+.Submarine-preview {
   width: 45px;
   height: 15px;
   margin: 3px;
 }
-.cruiser {
+.Cruiser {
   background-color: purple;
 }
-.cruiser-preview {
+.Cruiser-preview {
   width: 45px;
   height: 15px;
   margin: 3px;
 }
-.battleship {
+.Battleship {
   background-color: orange;
 }
-.battleship-preview {
+.Battleship-preview {
   width: 60px;
   height: 15px;
   margin: 3px;
 }
-.carrier {
+.Carrier {
   background-color: blue;
 }
-.carrier-preview {
+.Carrier-preview {
   width: 75px;
   height: 15px;
   margin: 3px;
+}
+.Attacked {
+  background-color: red;
+  transition-duration: 3s;
+}
+#computer .taken {
+  background-color: inherit;
 }

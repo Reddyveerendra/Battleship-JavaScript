@@ -102,18 +102,13 @@ const ui = () => {
         div.draggable = true;
         div.id = Id;
     }
-    shipMaker('carrier', "0");
-    shipMaker('battleship', "1");
-    shipMaker('cruiser', "2");
-    shipMaker('submarine', "3");
-    shipMaker('destroyer', "4");
+    shipMaker('Carrier', "0");
+    shipMaker('Battleship', "1");
+    shipMaker('Cruiser', "2");
+    shipMaker('Submarine', "3");
+    shipMaker('Destroyer', "4");
     /* ships computer */
-    let carrier = new shipFactory('carrier', 5);
-    let battleship = new shipFactory('battleship', 4);
-    let cruiser = new shipFactory('cruiser', 3);
-    let submarine = new shipFactory('submarine', 3);
-    let destroyer = new shipFactory('destroyer', 2);
-    let computer_ships = [carrier, battleship, cruiser, submarine, destroyer];
+    let computer_ships = [Carrier, Battleship, Cruiser, Submarine, Destroyer];
     let computer_space = document.querySelectorAll("#computer .cell");
     let x = Math.round(Math.random() * 5)
     var j = 0;
@@ -121,8 +116,8 @@ const ui = () => {
     computer_ships.forEach((computer_ship) => {
         let pos = preplans[x][j]
         for (let i = 0; i < computer_ship.length; i++) {
-            computer_space[pos[i]].classList.add(computer_ship.name)
-            computer_space[pos[i]].classList.add('taken')
+            computer_space[pos[i]].classList.add(computer_ship.name, 'taken')
+            computer_space[pos[i]].classList.remove("notTaken")
         }
         return j += 1;
     })

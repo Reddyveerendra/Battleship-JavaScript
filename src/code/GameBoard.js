@@ -5,7 +5,7 @@ function createGameBoard(user, color) {
     for (let i = 0; i < 100; i++) {
         const cell = document.createElement("div");
         temp.appendChild(cell);
-        cell.classList.add('cell', "notTaken");
+        cell.classList.add('cell', "notTaken", "notAttacked");
         cell.id = `${i}`
     }
     temp.id = `${user}`

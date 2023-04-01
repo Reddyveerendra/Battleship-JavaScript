@@ -1,7 +1,6 @@
 function shipFactory(name, length) {
 
     const ship = {
-
         hits: 0,
         hit() {
             this.hits = this.hits + 1;
